@@ -15,9 +15,10 @@ class Source(BaseSource):
         super().__init__()
         self.name = 'ApkCombo'
         self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
+            'User-Agent': generate_user_agent(),
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate',
+            'Accept-Language': 'en-US;q=0.5',
             'Referer': 'https://apkcombo.com/ru/downloader/',
         }
         response = Request.post(
