@@ -15,11 +15,9 @@ class Source(BaseSource):
         super().__init__()
         self.name = 'ApkCombo'
         self.headers = {
-            'User-Agent': generate_user_agent(),
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/115.0',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'Accept-Encoding': 'gzip, deflate',
-            'Accept-Language': 'en-US;q=0.5',
-            'Referer': 'https://apkcombo.com/ru/downloader/',
+            'Accept-Language': 'en-US,en;q=0.5',
         }
         response = Request.post(
             'https://apkcombo.com/checkin', headers=self.headers)
@@ -27,10 +25,10 @@ class Source(BaseSource):
 
     def get_app_info(self, pkg: str, versions_limit: int = -1) -> App:
         self.headers['token'] = reCaptchaV3(
-            'https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LffOIUUAAAAACDGY5pUGox0yBGBUvRD8aT8c2J0&co=aHR0cHM6Ly9hcGtjb21iby5jb206NDQz&hl=ru&v=QquE1_MNjnFHgZF4HPsEcf_2&size=invisible&cb=kuyn1i99ewi2')
+            'https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LffOIUUAAAAACDGY5pUGox0yBGBUvRD8aT8c2J0&co=aHR0cHM6Ly9hcGtjb21iby5jb206NDQz&hl=en&v=EGbODne6buzpTnWrrBprcfAY&size=invisible&cb=b1khfdis3xme')
         app: App = super().get_app_info(pkg, versions_limit)
         response = Request.get(
-            f'https://apkcombo.com/ru/downloader/?package={pkg}&device=tablet&sdk=25&arches=armeabi-v7a&ajax=1', headers=self.headers)
+            f'https://apkcombo.com/downloader?package={pkg}&device=tablet&sdk=25&arches=armeabi-v7a&ajax=1', headers=self.headers)
         html_code = response.text
         soup = BeautifulSoup(html_code, features='html.parser')
         versions: list[AppVersion] = []
@@ -65,7 +63,7 @@ class Source(BaseSource):
 
     def get_developer_id(self, package_name: str) -> str | None:
         response = Request.get(
-            f'https://apkcombo.com/ru/downloader/?package={package_name}&ajax=1', headers=self.headers)
+            f'https://apkcombo.com/downloader/?package={package_name}&ajax=1', headers=self.headers)
         html_code = response.text
         soup = BeautifulSoup(html_code, features='html.parser')
         developer_id = None
