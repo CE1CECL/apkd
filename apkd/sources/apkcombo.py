@@ -19,7 +19,7 @@ class Source(BaseSource):
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
             'Accept-Encoding': 'gzip, deflate',
             'Accept-Language': 'en-US;q=0.5',
-            'Referer': 'https://apkcombo.com/ru/downloader/',
+            'Referer': 'https://apkcombo.com/downloader/',
             'token': recaptcha_token
         }
 
@@ -29,7 +29,7 @@ class Source(BaseSource):
             'https://apkcombo.com/checkin', headers=self.headers)
         checkin = response.text
         response = Request.get(
-            f'https://apkcombo.com/ru/downloader/?package={pkg}&ajax=1', headers=self.headers)
+            f'https://apkcombo.com/downloader/?package={pkg}&device=tablet&sdk=25&arches=armeabi-v7a&ajax=1', headers=self.headers)
         html_code = response.text
         soup = BeautifulSoup(html_code, features='html.parser')
         versions: list[AppVersion] = []
