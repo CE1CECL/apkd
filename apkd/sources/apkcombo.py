@@ -30,7 +30,7 @@ class Source(BaseSource):
             'https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LffOIUUAAAAACDGY5pUGox0yBGBUvRD8aT8c2J0&co=aHR0cHM6Ly9hcGtjb21iby5jb206NDQz&hl=ru&v=QquE1_MNjnFHgZF4HPsEcf_2&size=invisible&cb=kuyn1i99ewi2')
         app: App = super().get_app_info(pkg, versions_limit)
         response = Request.get(
-            f'https://apkcombo.com/ru/downloader/?package={pkg}&ajax=1', headers=self.headers)
+            f'https://apkcombo.com/ru/downloader/?package={pkg}&device=tablet&sdk=25&arches=armeabi-v7a&ajax=1', headers=self.headers)
         html_code = response.text
         soup = BeautifulSoup(html_code, features='html.parser')
         versions: list[AppVersion] = []
